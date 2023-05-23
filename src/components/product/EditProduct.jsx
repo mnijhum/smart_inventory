@@ -9,8 +9,9 @@ import {
 } from "../../api/inventory";
 import { API_BASE_URL } from "../../config";
 import { alertContext } from "../../hooks/alertContext";
-import { checkAnyFieldEmpty } from "../../utils/reusableFuncs";
+
 import { DatePicker, MyModal, WarrantyDate } from "../common";
+import { checkAnyFieldEmpty } from "../../utils/reusableFuncs";
 
 const EditProduct = (props) => {
   const warrantyDatas = [1, 2, 3, 4, 5, 6, 7, 8, 10];
@@ -265,6 +266,7 @@ const EditProduct = (props) => {
                     className="pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none"
                     placeholder="Enter Purchase Price"
                     value={products[index].product.purchasePrice}
+                    onWheel={(e) => e.target.blur()}
                     onChange={(e) => {
                       const updatedProducts = [...products];
                       updatedProducts[index].product.purchasePrice =
@@ -310,7 +312,7 @@ const EditProduct = (props) => {
                       ? true
                       : false
                   }
-                  class="appearance-none checked:bg-blue-500 checked:border-none"
+                  className="appearance-none checked:bg-blue-500 checked:border-none"
                   onChange={() => {
                     const updateProducts = [...products];
                     products[index].product.purchaseDate === ""
@@ -478,7 +480,7 @@ const EditProduct = (props) => {
                 <svg
                   aria-hidden="true"
                   role="status"
-                  class="inline w-4 h-4 mr-3 text-white animate-spin"
+                  className="inline w-4 h-4 mr-3 text-white animate-spin"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"

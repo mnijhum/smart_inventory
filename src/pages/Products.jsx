@@ -3,6 +3,7 @@ import { getAllProducts } from "../api/inventory";
 import Appbar from "../components/common/Appbar";
 import { AddProduct, ProductTable, SearchProduct } from "../components/product";
 import { searchProducts } from "../utils/reusableFuncs";
+import { Footer } from "../components/common";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -40,7 +41,7 @@ const Products = () => {
     }
   };
   return (
-    <div className="">
+    <div className="flex flex-col min-h-screen">
       <Appbar />
       <div className="flex justify-between p-10">
         <AddProduct
@@ -61,6 +62,9 @@ const Products = () => {
             fetchAllProducts();
           }}
         />
+      </div>
+      <div className="px-10 mt-auto">
+        <Footer />
       </div>
     </div>
   );

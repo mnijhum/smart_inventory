@@ -1,6 +1,6 @@
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { AiOutlineCamera } from "react-icons/ai";
+import React, { useCallback, useContext, useState } from "react";
+import { AiOutlineCamera, AiOutlineClose } from "react-icons/ai";
 import { CgRemove } from "react-icons/cg";
 import { RiAddCircleFill } from "react-icons/ri";
 import {
@@ -12,7 +12,6 @@ import {
 import { alertContext } from "../../hooks/alertContext";
 import { checkAnyFieldEmpty } from "../../utils/reusableFuncs";
 import { DatePicker, DropDownInput, MyModal, WarrantyDate } from "../common";
-import { AiOutlineClose } from "react-icons/ai";
 
 const AddProduct = (props) => {
   const initialValue = {
@@ -33,19 +32,13 @@ const AddProduct = (props) => {
   const { getAllData } = props;
   const [openModal, setOpenModal] = useState(false);
   const [allCategoryProd, setAllCategoryProd] = useState([]);
-  const [warrantyYear, setWarrantyYear] = useState("1");
+
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([initialValue]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedProd, setSelectedProd] = useState("");
   const [refresh, setRefresh] = useState("");
   const { setAlertPopupContext } = useContext(alertContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    getProductsByCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, selectedProd, refresh]);
   const getCategoryandProducts = () => {
     getCategoryNameWiseProduct()
       .then((res) => {
@@ -68,24 +61,27 @@ const AddProduct = (props) => {
   const handleCloseModal = () => {
     setProducts([initialValue]);
     setOpenModal(false);
+    setRefresh(refresh);
   };
 
   const handleFileChange = useCallback(
     (event, index) => {
       const file = event.target.files[0];
-      products[index].productPhoto = event.target.files[0];
+      let updatedProducts = [...products];
+
+      updatedProducts[index].productPhoto = event.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onloadend = () => {
-          products[index].previewURL = reader.result;
-          //   products[index].productPhoto = reader.result;
+          updatedProducts[index].previewURL = reader.result;
           setRefresh(Math.random());
         };
         reader.readAsDataURL(file);
       } else {
-        products[index].previewURL = "";
+        updatedProducts[index].previewURL = "";
         setRefresh(Math.random());
       }
+      setProducts(updatedProducts);
     },
     [products, setRefresh]
   );
@@ -183,8 +179,9 @@ const AddProduct = (props) => {
                   <DropDownInput
                     data={category}
                     setSelected={(e) => {
-                      setSelectedCategory(e);
-                      products[index].product.categoryName = e;
+                      let updatedProducts = [...products];
+                      updatedProducts[index].product.categoryName = e;
+                      setProducts(updatedProducts);
                     }}
                   />
                 </div>
@@ -199,8 +196,9 @@ const AddProduct = (props) => {
                       products[index].product.categoryName
                     )}
                     setSelected={(e) => {
-                      setSelectedProd(e);
-                      products[index].product.productName = e;
+                      let updatedProducts = [...products];
+                      updatedProducts[index].product.productName = e;
+                      setProducts(updatedProducts);
                     }}
                   />
                 </div>
@@ -232,6 +230,7 @@ const AddProduct = (props) => {
                     min={1}
                     className={`pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none`}
                     placeholder="Enter Purchase Price"
+                    onWheel={(e) => e.target.blur()}
                     value={products[index].product.purchasePrice}
                     onChange={(e) => {
                       const updatedProducts = [...products];
@@ -275,7 +274,7 @@ const AddProduct = (props) => {
                       ? true
                       : false
                   }
-                  class="appearance-none checked:bg-blue-500 checked:border-none"
+                  className="appearance-none checked:bg-blue-500 checked:border-none"
                   onChange={() => {
                     const updateProducts = [...products];
                     products[index].product.purchaseDate === ""
@@ -287,7 +286,6 @@ const AddProduct = (props) => {
                           !updateProducts[index].product.hasWarranty);
                     updateProducts[index].product.warrantyInYears = 1;
                     setProducts(updateProducts);
-                    setRefresh(Math.random());
                   }}
                   //   disabled={products[index].product.purchaseDate === ""}
                 />
@@ -304,9 +302,10 @@ const AddProduct = (props) => {
                         warranty={true}
                         data={warrantyDatas}
                         setSelected={(e) => {
-                          setWarrantyYear(e);
-                          products[index].product.warrantyInYears =
+                          let updatedProduct = [...products];
+                          updatedProduct[index].product.warrantyInYears =
                             e > 1 ? e : 1;
+                          setProducts(updatedProduct);
                         }}
                       />
                     </div>
@@ -319,9 +318,11 @@ const AddProduct = (props) => {
                     <div className="">
                       <WarrantyDate
                         purchaseDate={products[index].product.purchaseDate}
-                        warrantyYear={warrantyYear}
+                        warrantyYear={products[index].product.warrantyInYears}
                         setWarranty={(e) => {
-                          products[index].product.warrantyExpiryDate = e;
+                          let updatedProducts = [...products];
+                          updatedProducts[index].product.warrantyExpiryDate = e;
+                          setProducts(updatedProducts);
                         }}
                       />
                     </div>
@@ -349,25 +350,7 @@ const AddProduct = (props) => {
                               ) + "..."
                             : products[index].productPhoto?.name}
                         </p>
-                        {/* <svg
-                          className="w-4 h-[] ml-2 text-red-500 cursor-pointer"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          onClick={() => {
-                            products[index].productPhoto = "";
-                            products[index].previewURL = "";
-                            setRefresh(Math.random());
-                          }}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg> */}
+
                         <div
                           className="cursor-pointer"
                           title="Remove this photo"

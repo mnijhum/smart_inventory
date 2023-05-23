@@ -31,17 +31,17 @@ const DeleteProduct = (props) => {
   return (
     <div>
       <div
-        tabindex="-1"
+        tabIndex="-1"
         aria-hidden="true"
         className="flex backdrop-brightness-50  justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden inset-0 h-[calc(100%-0rem)] "
       >
-        <div class="relative w-full max-w-md max-h-full">
-          <div class="relative bg-white rounded-lg shadow ">
-            <div class="p-6 text-center">
+        <div className="relative w-full max-w-md max-h-full">
+          <div className="relative bg-white rounded-lg shadow ">
+            <div className="p-6 text-center">
               <div className=" flex flex-row justify-center text-center mb-5">
                 <RiDeleteBinLine className=" text-[50px] text-red-500 bg-red-200 rounded-full p-3" />
               </div>
-              <h3 class="mb-5 text-lg font-normal text-black ">
+              <h3 className="mb-5 text-lg font-normal text-black ">
                 Are you sure you want to delete this product?
               </h3>
 
@@ -49,7 +49,7 @@ const DeleteProduct = (props) => {
                 <button
                   data-modal-hide="popup-modal"
                   type="button"
-                  class="text-red-500 bg-white w-[83px] h-[42px] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200  border rounded-md border-deleteConfirmColor text-sm font-medium px-5 py-2.5  focus:z-10"
+                  className="text-red-500 bg-white w-[83px] h-[42px] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200  border rounded-md border-deleteConfirmColor text-sm font-medium px-5 py-2.5  focus:z-10"
                   onClick={() => {
                     handleToggleModal();
                   }}
@@ -68,7 +68,7 @@ const DeleteProduct = (props) => {
                     <svg
                       aria-hidden="true"
                       role="status"
-                      class="inline w-4 h-4 mr-3 text-white animate-spin"
+                      className="inline w-4 h-4 mr-3 text-white animate-spin"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"

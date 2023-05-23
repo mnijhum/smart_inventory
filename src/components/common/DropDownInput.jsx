@@ -13,24 +13,6 @@ const DropdownInput = (props) => {
 
   return (
     <div className="relative">
-      {/* <select
-        className="pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none"
-        placeholder="Select an option"
-        value={selectedValue}
-        onChange={handleInputChange}
-        required
-        disabled={data?.length === 0}
-      >
-        {options.map((option, index) => (
-          <div
-            key={index}
-            className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            onClick={() => handleOptionClick(option)}
-          >
-            {option}
-          </div>
-        ))}
-      </select> */}
       <select
         id="day"
         className="pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none"

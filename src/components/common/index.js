@@ -3,3 +3,4 @@ export { default as MyModal } from "./MyModal";
 export { default as DropDownInput } from "./DropDownInput";
 export { default as DatePicker } from "./DatePicker";
 export { default as WarrantyDate } from "./WarrantyDate";
+export { default as Footer } from "./Footer";

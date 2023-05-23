@@ -40,67 +40,70 @@ const ProductTable = (props) => {
         console.log(err);
       });
   };
-
+  //max-h-[calc(100%-7rem)]
   return (
     <div>
-      <div class="relative overflow-x-auto  rounded-none">
-        <table class="w-full text-sm text-center text-gray-500 border-separate border-spacing-y-2">
-          <thead class="text-md text-gray-700 bg-tableHeaderColor  ">
+      <div className="relative overflow-x-auto  rounded-none h-[calc(100vh-280px)] ">
+        <table className="w-full text-sm text-center text-gray-500 border-separate border-spacing-y-2 ">
+          <thead className="text-md text-gray-700 bg-tableHeaderColor  ">
             <tr>
-              <th scope="col" class="p-4">
+              <th scope="col" className="p-4">
                 SL
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Asset No.
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Category
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Image
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Product Name
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Serial No.
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Price
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Warranty
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Purchase Date
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Action
               </th>
             </tr>
           </thead>
           <tbody className="">
             {allProducts?.map((product, index) => (
-              <tr className="bg-tableRowColor shadow-sm shadow-slate-300">
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+              <tr
+                className="bg-tableRowColor shadow-sm shadow-slate-300"
+                key={index}
+              >
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                   {index + 1}
                 </td>
 
-                <td class="px-6 py-4">{product.assetNumber}</td>
-                <td class="px-6 py-4">{product.categoryName}</td>
-                <td class="px-6 py-4 flex justify-center">
+                <td className="px-6 py-4">{product.assetNumber}</td>
+                <td className="px-6 py-4">{product.categoryName}</td>
+                <td className="px-6 py-4 flex justify-center">
                   <img
                     src={`${API_BASE_URL}/${product.productPhoto?.v50x50Path}`}
                     alt={product.productName + "_image"}
                     className="rounded-full h-[35px] w-[35px]"
                   />
                 </td>
-                <td class="px-6 py-4">{product.productName}</td>
-                <td class="px-6 py-4">
+                <td className="px-6 py-4">{product.productName}</td>
+                <td className="px-6 py-4">
                   {product.serialNumber ? product.serialNumber : "N/A"}
                 </td>
-                <td class="px-6 py-4">{product.purchasePrice}</td>
-                <td class="px-6 py-4">
+                <td className="px-6 py-4">{product.purchasePrice}</td>
+                <td className="px-6 py-4">
                   {product.warrantyInYears ? product.warrantyInYears : ""}{" "}
                   {!product.warrantyInYears
                     ? "N/A"
@@ -108,8 +111,8 @@ const ProductTable = (props) => {
                     ? "years"
                     : "year"}
                 </td>
-                <td class="px-6 py-4">{makeDate(product.purchaseDate)}</td>
-                <td class="px-6 py-4 text-center">
+                <td className="px-6 py-4">{makeDate(product.purchaseDate)}</td>
+                <td className="px-6 py-4 text-center">
                   <div className="flex justify-around">
                     {" "}
                     <FaRegEdit
