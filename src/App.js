@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { SnackbarProvider } from "notistack";
+import { useEffect, useRef, useState } from "react";
+import { alertContext } from "./hooks/alertContext";
+import { Products } from "./pages";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
 function App() {
+  const [alertPopupContext, setAlertPopupContext] = useState(""); //{message, type}
+  const alertPopupRef = useRef();
+  useEffect(() => {
+    if (!alertPopupContext) return;
+    alertPopupRef.current.enqueueSnackbar(alertPopupContext.message, {
+      variant: alertPopupContext.type,
+    });
+  }, [alertPopupContext]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <alertContext.Provider value={{ alertPopupContext, setAlertPopupContext }}>
+      <SnackbarProvider
+        ref={alertPopupRef}
+        maxSnack={4}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        style={{
+          fontWeight: alertPopupContext.type === "error" ? "bolder" : "bold",
+        }}
+        action={(key) => (
+          <AiOutlineClose
+            onClick={() => {
+              alertPopupRef.current.closeSnackbar(key);
+            }}
+            // style={{
+            //   color: "#fff",
+            //   height: "1.5rem",
+            //   paddingBottom: "0.5rem",
+            //   cursor: "pointer",
+            //   font
+            // }}
+            className="text-white h-[20px] text-lg cursor-pointer"
+          />
+        )}
+      ></SnackbarProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Products}></Route>
+        </Switch>
+      </BrowserRouter>
+    </alertContext.Provider>
   );
 }
 
