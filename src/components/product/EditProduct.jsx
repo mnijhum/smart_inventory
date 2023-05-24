@@ -263,7 +263,10 @@ const EditProduct = (props) => {
                 <div className="w-[300px]">
                   <input
                     type="text"
-                    className="pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none"
+                    className={`pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none ${
+                      !products[index].product.purchasePrice &&
+                      "border-red-500 focus:border-red-500"
+                    }`}
                     placeholder="Enter Purchase Price"
                     value={products[index].product.purchasePrice}
                     onWheel={(e) => e.target.blur()}
@@ -303,7 +306,7 @@ const EditProduct = (props) => {
                 </div>
               </div>
 
-              <div className="flex flex-row justify-center ml-14 gap-5 mb-2">
+              <div className="flex flex-row justify-center ml-14 gap-3 mb-2">
                 <input
                   type="checkbox"
                   checked={
@@ -312,7 +315,7 @@ const EditProduct = (props) => {
                       ? true
                       : false
                   }
-                  className="appearance-none checked:bg-blue-500 checked:border-none"
+                  className="appearance-none checked:bg-blue-500 checked:border-none mt-1"
                   onChange={() => {
                     const updateProducts = [...products];
                     products[index].product.purchaseDate === ""

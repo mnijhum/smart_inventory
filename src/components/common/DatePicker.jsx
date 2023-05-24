@@ -74,7 +74,9 @@ const DatePicker = (props) => {
       <div>
         <select
           id="day"
-          className="block border-gray-300 sm:w-[78px] w-full text-sm"
+          className={`block border-gray-300 sm:w-[78px] w-full text-sm ${
+            !selectedDay && "border-red-500 focus:border-red-500"
+          }`}
           onChange={(e) => setSelectedDay(e.target.value)}
           value={selectedDay}
         >
@@ -89,7 +91,9 @@ const DatePicker = (props) => {
       <div>
         <select
           id="month"
-          className="block border-gray-300 text-sm  w-full"
+          className={`block border-gray-300 text-sm  w-full ${
+            !selectedMonth && "border-red-500 focus:border-red-500"
+          }`}
           onChange={(e) => {
             setSelectedMonth(e.target.value);
           }}
@@ -106,7 +110,9 @@ const DatePicker = (props) => {
       <div>
         <select
           id="year"
-          className="block border-gray-300 text-sm  w-full"
+          className={`block border-gray-300 text-sm  w-full ${
+            !selectedYear && "border-red-500 focus:border-red-500"
+          }`}
           onChange={(e) => setSelectedyear(e.target.value)}
           value={selectedYear}
         >

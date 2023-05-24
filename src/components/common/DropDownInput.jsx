@@ -15,8 +15,11 @@ const DropdownInput = (props) => {
     <div className="relative">
       <select
         id="day"
-        className="pl-4 pr-10 py-2 w-full border border-gray-300 rounded-none"
+        className={`sm:pl-4 sm:pr-10 py-2 w-full border border-gray-300 rounded-none ${
+          !selectedValue && "border-red-500 focus:border-red-500"
+        }`}
         onChange={handleInputChange}
+        onSelect={(e) => e.target.blur}
         disabled={data?.length === 0}
         placeholder="Select an option"
         value={selectedValue}
